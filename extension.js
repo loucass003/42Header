@@ -32,6 +32,10 @@ function activate(context) {
 		if (!activeEditor) {
 			return;
 		}
+
+		if (activeEditor.document.uri.path === e.path)
+			return ;
+
 		vscode.commands.executeCommand(
 			'42header.insertHeader',
 			activeEditor.document.uri,
@@ -42,7 +46,7 @@ function activate(context) {
 					console.log(e);
 					const name = path.basename(e.path, '.h').toUpperCase();
 					var indexA = new vscode.Position(13,0)
-					edit.insert(indexA, `#ifndef ${name}\n# define ${name}\n\n\n\n#endif`);
+					edit.insert(indexA, `#ifndef ${name}_H\n# define ${name}_H\n\n\n\n#endif`);
 					console.log("heeeeho", edit);
 				}).then(data => {
 					const editor = vscode.window.activeTextEditor;
